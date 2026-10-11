@@ -1,11 +1,10 @@
-
 # Geospatial File Measurement API
 
-A REST API built with FastAPI to upload and process KML files and zipped Shapefiles. It extracts feature information and calculates polygon areas and line lengths using an appropriate projected coordinate reference system.
+A REST API built with FastAPI to upload and process KML files and zipped Shapefiles. It extracts feature information and calculates polygon areas and line lengths using an appropriate projected coordinate reference system (CRS).
 
 ## Features
 
-- Upload KML and zipped Shapefile files.
+- Upload KML files and zipped Shapefiles.
 - Extract geometry types, feature properties, and source CRS.
 - Calculate Polygon and MultiPolygon areas in square metres.
 - Calculate LineString and MultiLineString lengths in metres.
@@ -30,22 +29,23 @@ A REST API built with FastAPI to upload and process KML files and zipped Shapefi
 geospatial-measurement-api/
 ├── app/
 │   ├── main.py
-│   ├── processor.py
-│   └── storage.py
+│   └── processor.py
 ├── tests/
-├── test_data/
+│   └── test_api.py
 ├── sample.kml
 ├── create_test_data.py
 ├── requirements.txt
 └── README.md
 ```
 
+> This structure assumes `app/storage.py` and `test_data/` are not committed to the repository. Adjust it if your actual GitHub files differ.
+
 ## Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/MirudulaS/geospatial-measurement-api.git
 cd geospatial-measurement-api
 ```
 
@@ -74,7 +74,7 @@ The API runs locally at:
 
 http://127.0.0.1:8000
 
-Interactive documentation is available at:
+Interactive API documentation is available at:
 
 http://127.0.0.1:8000/docs
 
@@ -116,7 +116,7 @@ Returns metadata for an uploaded file.
 
 Returns feature details and applicable measurements.
 
-Example measurement fields:
+Example response:
 
 ```json
 {
@@ -133,17 +133,17 @@ Example measurement fields:
 }
 ```
 
-Values above are illustrative; actual measurements depend on the input geometry and selected projected CRS.
+The values above are illustrative. Actual measurements depend on the input geometry and selected projected CRS.
 
 ## Measurement Approach
 
-- Polygon and MultiPolygon geometries: calculate area in square metres.
-- LineString and MultiLineString geometries: calculate length in metres.
-- Point geometries: return no area or length.
+- **Polygon and MultiPolygon:** Calculate area in square metres.
+- **LineString and MultiLineString:** Calculate length in metres.
+- **Point:** Return no area or length.
 - Record the original CRS and the projected CRS used for measurements.
 - Reject files that cannot be processed.
 
-Geographic coordinates expressed in degrees should not be used directly for planar area or length calculations. The geometry is transformed into a projected CRS before measurement.
+Geographic coordinates expressed in degrees should not be used directly for planar area or length calculations. The geometry is transformed into a suitable projected CRS before measurement.
 
 ## Error Handling
 
@@ -152,5 +152,5 @@ The API validates supported file extensions and handles malformed KML files and 
 ## Limitations
 
 - Uploaded file records are stored in memory and are lost when the server restarts.
-- The ZIP input is expected to contain a usable Shapefile and its required supporting files.
+- ZIP input is expected to contain a usable Shapefile and its required supporting files.
 - The current project is a local prototype and does not include persistent database storage or authentication.
