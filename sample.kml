@@ -1,0 +1,21 @@
+
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <Placemark>
+      <name>Sample Land</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>77.00,11.00,0 77.01,11.00,0 77.01,11.01,0 77.00,11.01,0 77.00,11.00,0</coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Sample Location</name>
+      <Point>
+        <coordinates>77.005,11.005,0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
